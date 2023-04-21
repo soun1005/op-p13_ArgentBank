@@ -16,7 +16,7 @@ const NavBar = () => {
       </NavLink>
       <div>
         <NavLink to={'/login'} className={style.mainNavItem}>
-          <i className={'fa fa-user-circle'} />
+          <i className="fa fa-user-circle" />
           Sign In
         </NavLink>
       </div>

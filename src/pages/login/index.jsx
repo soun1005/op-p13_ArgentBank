@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Footer from '../../layout/footer';
 import NavBar from '../../layout/navBar';
 import style from './Login.module.css';
@@ -8,7 +9,7 @@ const Login = () => {
       <NavBar />
       <main className="main bgDark">
         <section className={style.signInContent}>
-          {/* <i className="fa fa-user-circle sign-in-icon"></i> */}
+          <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
           <form>
             <div className={style.inputWrapper}>
@@ -24,12 +25,9 @@ const Login = () => {
               <label for="remember-me">Remember me</label>
             </div>
             {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-            <a href="./user.html" className={style.signInButton}>
+            <NavLink to="/user" className={style.signInButton}>
               Sign In
-            </a>
-            {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
-            {/* <!-- <button className="sign-in-button">Sign In</button> --> */}
-            {/* <!--  --> */}
+            </NavLink>
           </form>
         </section>
       </main>
