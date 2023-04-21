@@ -9,7 +9,6 @@ const NavBar = () => {
       <NavLink to={'/'} className={style.mainNavLogo}>
         <img
           className={style.mainNavLogoImage}
-          //   class="main-nav-logo-image"
           src={icon}
           alt="Argent Bank Logo"
         />
