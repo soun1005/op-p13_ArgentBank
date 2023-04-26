@@ -12,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  console.log('auth:', auth);
 
   const [user, setUser] = useState({
     id: '',
@@ -27,10 +26,10 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // console.log(user);
     dispatch(loginUser(user));
   };
+
+  console.log(auth);
 
   return (
     <>
