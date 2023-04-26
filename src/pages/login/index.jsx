@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.token) {
-      navigate('/user');
+      navigate('/profile');
     }
   }, [auth.token, navigate]);
 

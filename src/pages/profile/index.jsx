@@ -1,8 +1,8 @@
-import style from './User.module.css';
+import style from './Profile.module.css';
 import NavBar from '../../layout/navBar';
 import Footer from '../../layout/footer';
 
-const User = () => {
+const Profile = () => {
   return (
     <>
       <NavBar />
@@ -60,4 +60,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Profile;

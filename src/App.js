@@ -2,7 +2,7 @@ import './App.css';
 import Login from './pages/login';
 import Main from './pages/main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import User from './pages/user';
+import Profile from './pages/profile';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route exact path="/login" element={<Login />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </>
