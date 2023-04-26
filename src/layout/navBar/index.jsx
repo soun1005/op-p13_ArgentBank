@@ -19,14 +19,15 @@ const NavBar = (props) => {
   );
   const signOut = (
     <NavLink to={'/login'} className={style.mainNavItem}>
-      <i className="fa-sharp fa-light fa-arrow-right-from-bracket" />
+      <i className="fa fa-sign-out" aria-hidden="true"></i>
+
       <button
         class="sign-out-button"
         onClick={() => {
           dispatch(logoutUser(null));
         }}
       >
-        Log out
+        Sign out
       </button>
     </NavLink>
   );
