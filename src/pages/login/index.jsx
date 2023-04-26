@@ -1,13 +1,36 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from '../../slices/authSlice';
+import { useState, useEffect } from 'react';
+
+// components
 import Footer from '../../layout/footer';
 import NavBar from '../../layout/navBar';
 import style from './Login.module.css';
-import { useSelector } from 'react-redux';
-// import { useState } from 'react';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
+  console.log('auth:', auth);
+
+  const [user, setUser] = useState({
+    id: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    if (auth.token) {
+      navigate('/user');
+    }
+  }, [auth.token, navigate]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // console.log(user);
+    dispatch(loginUser(user));
+  };
 
   return (
     <>
@@ -16,13 +39,13 @@ const Login = () => {
         <section className={style.signInContent}>
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className={style.inputWrapper}>
               <label htmlFor="username">Username</label>
               <input
                 type="text"
                 id="username"
-                // onChange={(e) => setId(e.target.value)}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
             </div>
             <div className={style.inputWrapper}>
@@ -30,7 +53,7 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
-                // onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
             </div>
             <div className={style.inputRemember}>
@@ -38,9 +61,14 @@ const Login = () => {
               <label htmlFor="remember-me">Remember me</label>
             </div>
             {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-            <NavLink to="/user" className={style.signInButton}>
+            <button className={style.signInButton}>
+              {' '}
+              {auth.loginStatus === 'pending' ? 'Submitting...' : 'Login'}
+            </button>
+            {/* <NavLink to="/user" className={style.signInButton}>
               Sign In
-            </NavLink>
+            </NavLink> */}
+            {auth.loginStatus === 'rejected' ? <p>{auth.loginError}</p> : null}
           </form>
         </section>
       </main>
