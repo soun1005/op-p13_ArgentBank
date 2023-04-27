@@ -14,22 +14,27 @@ const NavBar = (props) => {
   const signIn = (
     <NavLink to={'/login'} className={style.mainNavItem}>
       <i className="fa fa-user-circle" />
-      <button class="sign-in-button">Sign In</button>
+      <button className={style.signInButton}>Sign In</button>
     </NavLink>
   );
   const signOut = (
-    <NavLink to={'/login'} className={style.mainNavItem}>
-      <i className="fa fa-sign-out" aria-hidden="true"></i>
-
-      <button
-        class="sign-out-button"
+    <>
+      <NavLink to={'/profile'}>
+        <i className="fa fa-user-circle-o" aria-hidden="true">
+          <span className={style.profileName}>{props.name}</span>
+        </i>
+      </NavLink>
+      <NavLink
+        to={'/login'}
+        className={style.mainNavItem}
         onClick={() => {
           dispatch(logoutUser(null));
         }}
       >
-        Sign out
-      </button>
-    </NavLink>
+        <i className="fa fa-sign-out" aria-hidden="true"></i>
+        <button class={style.signOutButton}>Sign out</button>
+      </NavLink>
+    </>
   );
 
   return (

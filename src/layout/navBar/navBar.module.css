@@ -1,3 +1,9 @@
+.signInButton,
+.signOutButton,
+.profileName {
+  font-size: 13px;
+}
+
 .mainNav {
   display: flex;
   justify-content: space-between;
@@ -17,6 +23,7 @@
 .mainNavItem {
   text-decoration: none;
   margin-right: 0.5rem;
+  margin-left: 1rem;
 }
 
 .mainNavItem:hover {
@@ -31,4 +38,8 @@
 .mainNavLogoImage {
   max-width: 100%;
   width: 200px;
+}
+
+.profileName {
+  margin-left: 4px;
 }

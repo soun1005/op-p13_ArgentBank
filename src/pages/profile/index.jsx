@@ -1,17 +1,17 @@
 import style from './Profile.module.css';
-import NavBar from '../../layout/navBar';
+// import NavBar from '../../layout/navBar';
 import Footer from '../../layout/footer';
 
-const Profile = () => {
+const Profile = (props) => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar name="Tony" /> */}
       <main className="main bgDark">
         <div className={style.header}>
           <h1>
             Welcome back
             <br />
-            Tony Jarvis!
+            {props.name}
           </h1>
           <button className={style.editButton}>Edit Name</button>
         </div>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 // components
 import Footer from '../../layout/footer';
-import NavBar from '../../layout/navBar';
+// import NavBar from '../../layout/navBar';
 import style from './Login.module.css';
 
 const Login = () => {
@@ -33,7 +33,7 @@ const Login = () => {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar name="Tony" /> */}
       <main className="main bgDark">
         <section className={style.signInContent}>
           <i className="fa fa-user-circle sign-in-icon"></i>
