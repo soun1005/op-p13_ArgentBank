@@ -9,7 +9,7 @@ const NavBar = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  console.log(auth);
+  // console.log('auth in nav bar:', auth);
 
   const signIn = (
     <NavLink to={'/login'} className={style.mainNavItem}>
@@ -32,7 +32,7 @@ const NavBar = (props) => {
         }}
       >
         <i className="fa fa-sign-out" aria-hidden="true"></i>
-        <button class={style.signOutButton}>Sign out</button>
+        <button className={style.signOutButton}>Sign out</button>
       </NavLink>
     </>
   );

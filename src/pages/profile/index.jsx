@@ -1,17 +1,37 @@
 import style from './Profile.module.css';
-// import NavBar from '../../layout/navBar';
 import Footer from '../../layout/footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { loadUser } from '../../slices/profileSlice';
 
 const Profile = (props) => {
+  // const auth = useSelector((state) => state.auth);
+  const profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
+  // const [userName, setUserName] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  // });
+
+  useEffect(() => {
+    // console.log('auth', auth);
+    // if (auth.token) {
+    dispatch(loadUser());
+
+    // }
+  }, [dispatch]);
+  console.log(profile);
+  // console.log('loginpage auth:', auth);
+
   return (
     <>
-      {/* <NavBar name="Tony" /> */}
       <main className="main bgDark">
         <div className={style.header}>
           <h1>
             Welcome back
             <br />
-            {props.name}
+            {profile.firstName}
           </h1>
           <button className={style.editButton}>Edit Name</button>
         </div>

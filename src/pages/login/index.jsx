@@ -11,6 +11,7 @@ import style from './Login.module.css';
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // 현재 auth의 state는 initial state
   const auth = useSelector((state) => state.auth);
 
   const [user, setUser] = useState({
@@ -29,7 +30,7 @@ const Login = () => {
     dispatch(loginUser(user));
   };
 
-  console.log(auth);
+  console.log('loginpage auth:', auth);
 
   return (
     <>

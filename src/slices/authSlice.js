@@ -37,16 +37,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loadUser(state, action) {
-      const token = state.token;
-
-      return {
-        ...state,
-        token: action.payload,
-        name: token.name,
-        userLoaded: true,
-      };
-    },
     logoutUser(state, action) {
       localStorage.removeItem('token');
       return {
@@ -76,7 +66,6 @@ const authSlice = createSlice({
         };
       } else return state;
     });
-
     // when loginUser function result is 'rejected'
     builder.addCase(loginUser.rejected, (state, action) => {
       return {
@@ -88,5 +77,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { loadUser, logoutUser } = authSlice.actions;
+export const { logoutUser } = authSlice.actions;
 export default authSlice.reducer;
