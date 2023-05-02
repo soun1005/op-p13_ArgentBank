@@ -5,11 +5,10 @@ import icon from '../../assets/argentBankLogo.png';
 import { logoutUser } from '../../slices/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-const NavBar = (props) => {
+const NavBar = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
-  // console.log('auth in nav bar:', auth);
+  const profile = useSelector((state) => state.profile);
 
   const signIn = (
     <NavLink to={'/login'} className={style.mainNavItem}>
@@ -21,7 +20,7 @@ const NavBar = (props) => {
     <>
       <NavLink to={'/profile'}>
         <i className="fa fa-user-circle-o" aria-hidden="true">
-          <span className={style.profileName}>{props.name}</span>
+          <span className={style.profileName}>{profile.firstName}</span>
         </i>
       </NavLink>
       <NavLink

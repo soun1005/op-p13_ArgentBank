@@ -1,28 +1,45 @@
 import style from './Profile.module.css';
 import Footer from '../../layout/footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadUser } from '../../slices/profileSlice';
+import NameEditor from '../../components/nameEditor';
+import NameDisplay from '../../components/nameDisplay';
 
 const Profile = (props) => {
   // const auth = useSelector((state) => state.auth);
   const profile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
 
-  // const [userName, setUserName] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  // });
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     // console.log('auth', auth);
-    // if (auth.token) {
     dispatch(loadUser());
-
-    // }
   }, [dispatch]);
-  console.log(profile);
-  // console.log('loginpage auth:', auth);
+
+  useEffect(() => {
+    setFirstName(profile.firstName);
+    setLastName(profile.lastName);
+  }, [profile]);
+
+  const handleEditName = () => {
+    // edit button disappear, two inputs appear, two buttons appear(save/cancel)
+    setIsEditing(true);
+  };
+
+  // const handleSubmit = () => {
+  //   // update DB, inputs disappear, two buttons disappear, name and edit button appears
+  // };
+
+  // const handleCancel = () => {
+  //   // same as handleSubmit but nothing is changed -> just UI change
+  //   setIsEditing(false);
+  // };
+
+  console.log(isEditing);
 
   return (
     <>
@@ -31,9 +48,17 @@ const Profile = (props) => {
           <h1>
             Welcome back
             <br />
-            {profile.firstName}
+            {isEditing ? (
+              <NameEditor fName={firstName} lName={lastName} />
+            ) : (
+              <>
+                <NameDisplay firstName={firstName} lastName={lastName} />
+                <button className={style.editButton} onClick={handleEditName}>
+                  Edit Name
+                </button>
+              </>
+            )}
           </h1>
-          <button className={style.editButton}>Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         <section className={style.account}>

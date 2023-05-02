@@ -21,17 +21,18 @@ export const loadUser = createAsyncThunk(
         const res = await axios.post(
           'http://localhost:3001/api/v1/user/profile',
           {},
+          // the value that user send to DB by API
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         console.log('profileSlice response:', res);
+
         const firstName = res.data.body.firstName;
         const lastName = res.data.body.lastName;
-        // token location : data.body.token(info in Swagger)
-        //   const token = res.data.body.token;
-        //   localStorage.setItem('token', token);
+
         // will be saved in the 'action.payload'
+        // the data that is received by API -> to display on profile
         return { firstName, lastName };
       }
     } catch (error) {
@@ -47,31 +48,31 @@ const profileSlice = createSlice({
   initialState,
   reducers: {},
 
-  //   extra reducers to handle http request
+  // extra reducers to handle http request with promise
   extraReducers: (builder) => {
-    // when loginUser function result is 'pending'
+    // when loadUser function result is 'pending'
     builder.addCase(loadUser.pending, (state, action) => {
       return { ...state, profileStatus: 'pending' };
     });
-    // when loginUser function result is 'fullfilled'
+
+    // when loadUser function result is 'fullfilled'
     builder.addCase(loadUser.fulfilled, (state, action) => {
       console.log('profileSlice action.payload:', action.payload);
       if (action.payload) {
         return {
           ...state,
-          //   token: action.payload,
-          //   loginStatus: 'success',
           firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
           profileStatus: 'success',
         };
       } else return state;
     });
-    // when loginUser function result is 'rejected'
+
+    // when loadUser function result is 'rejected'
     builder.addCase(loadUser.rejected, (state, action) => {
       return {
         ...state,
         profileStatus: 'rejected',
-        // loginError: action.payload,
       };
     });
   },
