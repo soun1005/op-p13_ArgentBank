@@ -7,53 +7,45 @@ import NameEditor from '../../components/nameEditor';
 import NameDisplay from '../../components/nameDisplay';
 import { editName } from '../../slices/profileSlice';
 
-const Profile = (props) => {
-  // const auth = useSelector((state) => state.auth);
+const Profile = () => {
+  // get first and last name from state
   const profile = useSelector((state) => state.profile);
+  const firstNameFromState = profile.firstName;
+  const lastNameFromState = profile.lastName;
+
   const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
+  // To dispatch loadUser reducer
   useEffect(() => {
-    // console.log('auth', auth);
     dispatch(loadUser());
   }, [dispatch]);
 
+  // To display user name based on DB
   useEffect(() => {
-    setFirstName(profile.firstName);
-    setLastName(profile.lastName);
-  }, [profile]);
+    setFirstName(firstNameFromState);
+    setLastName(lastNameFromState);
+  }, [firstNameFromState, lastNameFromState, profile]);
 
   const handleEditName = () => {
-    // edit button disappear, two inputs appear, two buttons appear(save/cancel)
     setIsEditing(true);
   };
 
   // reduce PUT request here
   const handleSubmit = (e) => {
-    e.preventDefault();
     dispatch(editName({ firstName, lastName }));
     // update DB, inputs disappear, two buttons disappear, name and edit button appears
     // using dispatch(), I apply reduce function to do PUT request
     setIsEditing(false);
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e) => {
     // same as handleSubmit but nothing is changed -> just UI change
     setIsEditing(false);
   };
-
-  const getFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const getLastName = (e) => {
-    setLastName(e.target.value);
-  };
-
-  // console.log(isEditing);
 
   return (
     <>
@@ -62,22 +54,26 @@ const Profile = (props) => {
           <h1>
             Welcome back
             <br />
-            {isEditing ? (
-              <NameEditor
-                fName={firstName}
-                lName={lastName}
-                onClickCancel={handleCancel}
-                onClickSave={handleSubmit}
-                firstNameOnChange={getFirstName}
-                lastNameOnChange={getLastName}
-              />
-            ) : (
+            {!isEditing ? (
               <>
                 <NameDisplay firstName={firstName} lastName={lastName} />
                 <button className={style.editButton} onClick={handleEditName}>
                   Edit Name
                 </button>
               </>
+            ) : (
+              <NameEditor
+                fName={firstName}
+                lName={lastName}
+                onClickCancel={handleCancel}
+                onClickSave={handleSubmit}
+                firstNameOnChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
+                lastNameOnChange={(e) => {
+                  setLastName(e.target.value);
+                }}
+              />
             )}
           </h1>
         </div>

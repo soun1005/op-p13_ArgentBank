@@ -1,28 +1,35 @@
 import style from './nameEditor.module.css';
 
-const NameEditor = (props) => {
+const NameEditor = ({
+  fName,
+  lName,
+  firstNameOnChange,
+  onClickSave,
+  lastNameOnChange,
+  onClickCancel,
+}) => {
   return (
     <div>
       <form className={style.inputContainer}>
         <div className={style.inputWrap}>
           <input
             type="text"
-            placeholder={props.fName}
+            placeholder={fName}
             className={style.input}
-            onChange={props.firstNameOnChange}
+            onChange={firstNameOnChange}
           />
-          <button className={style.btn} onClick={props.onClickSave}>
+          <button className={style.btn} onClick={onClickSave}>
             Save
           </button>
         </div>
         <div className={style.inputWrap}>
           <input
             type="text"
-            placeholder={props.lName}
+            placeholder={lName}
             className={style.input}
-            onChange={props.lastNameOnChange}
+            onChange={lastNameOnChange}
           />
-          <button className={style.btn} onClick={props.onClickCancer}>
+          <button className={style.btn} onClick={onClickCancel}>
             Cancel
           </button>
         </div>
