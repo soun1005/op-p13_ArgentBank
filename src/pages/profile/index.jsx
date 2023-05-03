@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { loadUser } from '../../slices/profileSlice';
 import NameEditor from '../../components/nameEditor';
 import NameDisplay from '../../components/nameDisplay';
+import { editName } from '../../slices/profileSlice';
 
 const Profile = (props) => {
   // const auth = useSelector((state) => state.auth);
@@ -30,16 +31,29 @@ const Profile = (props) => {
     setIsEditing(true);
   };
 
-  // const handleSubmit = () => {
-  //   // update DB, inputs disappear, two buttons disappear, name and edit button appears
-  // };
+  // reduce PUT request here
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(editName({ firstName, lastName }));
+    // update DB, inputs disappear, two buttons disappear, name and edit button appears
+    // using dispatch(), I apply reduce function to do PUT request
+    setIsEditing(false);
+  };
 
-  // const handleCancel = () => {
-  //   // same as handleSubmit but nothing is changed -> just UI change
-  //   setIsEditing(false);
-  // };
+  const handleCancel = () => {
+    // same as handleSubmit but nothing is changed -> just UI change
+    setIsEditing(false);
+  };
 
-  console.log(isEditing);
+  const getFirstName = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const getLastName = (e) => {
+    setLastName(e.target.value);
+  };
+
+  // console.log(isEditing);
 
   return (
     <>
@@ -49,7 +63,14 @@ const Profile = (props) => {
             Welcome back
             <br />
             {isEditing ? (
-              <NameEditor fName={firstName} lName={lastName} />
+              <NameEditor
+                fName={firstName}
+                lName={lastName}
+                onClickCancel={handleCancel}
+                onClickSave={handleSubmit}
+                firstNameOnChange={getFirstName}
+                lastNameOnChange={getLastName}
+              />
             ) : (
               <>
                 <NameDisplay firstName={firstName} lastName={lastName} />
