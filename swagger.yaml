@@ -1,0 +1,222 @@
+swagger: '2.0'
+info:
+  title: Bank Argent Transaction API documentation
+  description: Contains API endpoints for transaction features
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+
+# path for each API requests
+paths:
+  # View current month's transactions
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Current month transaction
+      summary: User's transactions for current month
+      description: API to fetch the transactions for the current month
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: userId
+          required: true
+          type: integer
+          description: an identified user's ID
+        - in: path
+          name: currentMonth
+          required: true
+          type: string
+          description: current month
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User's transactions are loaded successfully
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  # View transaction detail , modify and delete chosen transaction
+
+  /user/transactions/{transactionId}:
+    # View transaction detail
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Read transaction details
+      summary: View the detail of user's selected transaction
+      description: API to fetch the details of selected transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: User ID
+          required: true
+          type: integer
+          description: A specific user's ID
+        - in: path
+          name: transaction ID
+          required: true
+          type: integer
+          description: An ID of transaction that has been selected by user
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User's transation sucessfully loaded
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Update transactions
+      summary: Modify selected transaction
+      description: Modify specific transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: transaction ID
+          required: true
+          type: integer
+          description: An ID of transaction that has been selected by user
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateBody'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User's transaction successfully modified
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
+# reusable body
+definitions:
+  Transactions:
+    type: object
+    properties:
+      status:
+        type: integer
+        example: 200
+      message:
+        type: string
+        example: Sucess
+      transactions:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Transaction ID
+              example: 20
+            date:
+              type: string
+              format: date-time
+              description: Transaction date and time
+              example: 2023-05-25T11:00:32.766Z
+            description:
+              type: string
+              description: Transaction description
+              example: Golden Sun Bakery
+            amount:
+              type: integer
+              format: int32
+              description: Transaction amount
+              example: 40
+            balance:
+              type: string
+              description: Account balance after transaction
+              example: 151,410,000,000
+            type:
+              type: string
+              description: Transaction type
+              example: Grocery
+            category:
+              type: string
+              description: Transaction category
+              example: Household
+            notes:
+              type: string
+              description: Transaction notes
+              example: Cake
+  UpdateBody:
+    properties:
+      id:
+        type: string
+        format: int64
+        description: User ID
+        example: 20
+      date:
+        type: string
+        format: date-time
+        description: Date and time by following format (YYYY-MM-DDThh:mm:ssTZD)
+        example: 2023-05-12T14:30:00Z
+      description:
+        type: string
+        example: Golden Sun Bakery
+      amount:
+        type: integer
+        example: 40
+      balance:
+        type: integer
+        example: 151,410,000,000
+      transactionType:
+        type: string
+        example: Grocery
+      category:
+        $ref: '#/definitions/TransactionType'
+      notes:
+        type: string
+        example: Cake
+  TransactionType:
+    type: string
+    enum:
+      - Travel
+      - Health
+      - Education
+      - Groceries
+      - Utilities
+      - Household
+      - Transportation
+      - Leisure
+      - Shopping
+    example: Household

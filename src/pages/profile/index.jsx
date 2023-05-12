@@ -3,9 +3,10 @@ import Footer from '../../layout/footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { loadUser } from '../../slices/profileSlice';
+import { editName } from '../../slices/profileSlice';
+
 import NameEditor from '../../components/nameEditor';
 import NameDisplay from '../../components/nameDisplay';
-import { editName } from '../../slices/profileSlice';
 
 const Profile = () => {
   // get first and last name from state
