@@ -11,15 +11,15 @@ schemes:
 
 # path for each API requests
 paths:
-  # View current month's transactions
+  # Get transactions
   /user/transactions:
     get:
       security:
         - Bearer: []
       tags:
         - Current month transaction
-      summary: User's transactions for current month
-      description: API to fetch the transactions for the current month
+      summary: User's transactions for a specific period
+      description: API endpoint to fetch the transactions. If the dates are not provided, current month transactions will be displayed.
       parameters:
         - in: header
           name: Authorization
@@ -27,15 +27,19 @@ paths:
           type: string
           required: true
         - in: path
-          name: userId
-          required: true
-          type: integer
-          description: an identified user's ID
+          name: startDate
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2023-05'
         - in: path
-          name: currentMonth
-          required: true
-          type: string
-          description: current month
+          name: endDate
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2023-05'
       produces:
         - application/json
       responses:
@@ -58,18 +62,13 @@ paths:
       tags:
         - Read transaction details
       summary: View the detail of user's selected transaction
-      description: API to fetch the details of selected transaction
+      description: API endpoint to fetch the details of selected transaction
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           type: string
           required: true
-        - in: path
-          name: User ID
-          required: true
-          type: integer
-          description: A specific user's ID
         - in: path
           name: transaction ID
           required: true
@@ -81,7 +80,7 @@ paths:
         '200':
           description: User's transation sucessfully loaded
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/SingleTransaction'
         '400':
           description: Invalid Fields
         '500':
@@ -91,8 +90,8 @@ paths:
         - Bearer: []
       tags:
         - Update transactions
-      summary: Modify selected transaction
-      description: Modify specific transaction
+      summary: Modify a transaction by transaction ID
+      description: API endpoint to modify specific transaction. To add or update a note, provide value as string in the request body. To delete a note, provide "null" as a value in the request body.
       parameters:
         - in: header
           name: Authorization
@@ -106,7 +105,6 @@ paths:
           description: An ID of transaction that has been selected by user
         - in: body
           name: body
-          description: Update user profile attributes
           required: true
           schema:
             $ref: '#/definitions/UpdateBody'
@@ -116,7 +114,7 @@ paths:
         '200':
           description: User's transaction successfully modified
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/SingleTransaction'
         '400':
           description: Invalid Fields
         '500':
@@ -178,30 +176,54 @@ definitions:
               type: string
               description: Transaction notes
               example: Cake
+  SingleTransaction:
+    type: object
+    properties:
+      status:
+        type: integer
+        example: 200
+      message:
+        type: string
+        example: Success
+      transaction:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Transaction ID
+            example: 20
+          date:
+            type: string
+            format: date-time
+            description: Transaction date and time
+            example: 2023-05-25T11:00:32.766Z
+          description:
+            type: string
+            description: Transaction description
+            example: Golden Sun Bakery
+          amount:
+            type: integer
+            format: int32
+            description: Transaction amount
+            example: 40
+          balance:
+            type: string
+            description: Account balance after transaction
+            example: 151,410,000,000
+          type:
+            type: string
+            description: Transaction type
+            example: Grocery
+          category:
+            type: string
+            description: Transaction category
+            example: Household
+          notes:
+            type: string
+            description: Transaction notes
+            example: Cake
   UpdateBody:
     properties:
-      id:
-        type: string
-        format: int64
-        description: User ID
-        example: 20
-      date:
-        type: string
-        format: date-time
-        description: Date and time by following format (YYYY-MM-DDThh:mm:ssTZD)
-        example: 2023-05-12T14:30:00Z
-      description:
-        type: string
-        example: Golden Sun Bakery
-      amount:
-        type: integer
-        example: 40
-      balance:
-        type: integer
-        example: 151,410,000,000
-      transactionType:
-        type: string
-        example: Grocery
       category:
         $ref: '#/definitions/TransactionType'
       notes:
