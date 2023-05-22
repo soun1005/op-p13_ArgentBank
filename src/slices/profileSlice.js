@@ -30,7 +30,6 @@ export const loadUser = createAsyncThunk(
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        // console.log('profileSlice response:', res);
 
         const firstName = res.data.body.firstName;
         const lastName = res.data.body.lastName;
@@ -41,7 +40,6 @@ export const loadUser = createAsyncThunk(
       }
     } catch (error) {
       const errorMsg = error.response.data.message;
-      // console.log('profileSlice errormsg:', errorMsg);
       return rejectWithValue(errorMsg);
     }
   }
@@ -66,17 +64,12 @@ export const editName = createAsyncThunk(
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log('profileEdit response:', res);
-        console.log('profile edit slice status:', res.data.status);
-        console.log('profile edit slice message:', res.data.message);
         const firstName = res.data.body.firstName;
         const lastName = res.data.body.lastName;
         return { firstName, lastName };
       }
     } catch (error) {
-      console.log('error:', error);
       const errorMsg = error.response.data.message;
-      console.log('profileSlice errormsg:', errorMsg);
       return rejectWithValue(errorMsg);
     }
   }
@@ -96,7 +89,6 @@ const profileSlice = createSlice({
 
     // when loadUser function result is 'fullfilled'
     builder.addCase(loadUser.fulfilled, (state, action) => {
-      // console.log('profileSlice action.payload:', action.payload);
       if (action.payload) {
         return {
           ...state,
@@ -121,7 +113,6 @@ const profileSlice = createSlice({
 
     // when loadUser function result is 'fullfilled'
     builder.addCase(editName.fulfilled, (state, action) => {
-      console.log('profileUpdateSlice action.payload:', action.payload);
       if (action.payload) {
         return {
           ...state,

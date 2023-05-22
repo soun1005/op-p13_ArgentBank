@@ -7,11 +7,6 @@ import iconSecurity from '../../assets/icon-security.png';
 // import { useSelector } from 'react-redux';
 
 const Main = (props) => {
-  // const auth = useSelector((state) => state.auth);
-  // // console.log('auth:', auth);
-  // // console.log(auth.userLoaded);
-  // const userLoaded = auth.userLoaded;
-
   return (
     <>
       {/* <NavBar userStatus={userLoaded} name="Tony" /> */}

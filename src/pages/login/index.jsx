@@ -30,8 +30,6 @@ const Login = () => {
     dispatch(loginUser(user));
   };
 
-  console.log('loginpage auth:', auth);
-
   return (
     <>
       {/* <NavBar name="Tony" /> */}
