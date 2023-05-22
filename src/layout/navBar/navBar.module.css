@@ -43,3 +43,9 @@
 .profileName {
   margin-left: 4px;
 }
+
+@media (max-width: 479px) {
+  .mainNavLogoImage {
+    width: 150px;
+  }
+}
