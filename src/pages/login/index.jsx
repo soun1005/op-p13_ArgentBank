@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 
 // components
 import Footer from '../../layout/footer';
-// import NavBar from '../../layout/navBar';
 import style from './Login.module.css';
 
 const Login = () => {
@@ -21,6 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.token) {
+      // if there is token(when logged in) -> redirect to profile page
       navigate('/profile');
     }
   }, [auth.token, navigate]);
@@ -32,7 +32,6 @@ const Login = () => {
 
   return (
     <>
-      {/* <NavBar name="Tony" /> */}
       <main className="main bgDark">
         <section className={style.signInContent}>
           <i className="fa fa-user-circle sign-in-icon"></i>
@@ -60,12 +59,8 @@ const Login = () => {
             </div>
             {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
             <button className={style.signInButton}>
-              {' '}
               {auth.loginStatus === 'pending' ? 'Submitting...' : 'Login'}
             </button>
-            {/* <NavLink to="/user" className={style.signInButton}>
-              Sign In
-            </NavLink> */}
             {auth.loginStatus === 'rejected' ? <p>{auth.loginError}</p> : null}
           </form>
         </section>

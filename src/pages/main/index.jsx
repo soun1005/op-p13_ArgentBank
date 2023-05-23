@@ -1,15 +1,12 @@
 import Footer from '../../layout/footer';
-// import NavBar from '../../layout/navBar';
 import style from './main.module.css';
 import iconChat from '../../assets/icon-chat.png';
 import iconMoney from '../../assets/icon-money.png';
 import iconSecurity from '../../assets/icon-security.png';
-// import { useSelector } from 'react-redux';
 
 const Main = (props) => {
   return (
     <>
-      {/* <NavBar userStatus={userLoaded} name="Tony" /> */}
       <main>
         <div className={style.hero}>
           <section className={style.heroContent}>
