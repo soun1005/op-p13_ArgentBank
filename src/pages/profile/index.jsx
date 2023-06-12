@@ -57,7 +57,10 @@ const Profile = () => {
             <br />
             {!isEditing ? (
               <>
-                <NameDisplay firstName={firstName} lastName={lastName} />
+                <NameDisplay
+                  firstName={firstNameFromState}
+                  lastName={lastNameFromState}
+                />
                 <button className={style.editButton} onClick={handleEditName}>
                   Edit Name
                 </button>
